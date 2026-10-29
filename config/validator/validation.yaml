@@ -1,0 +1,57 @@
+App\Entity\Location:
+    properties:
+        city:
+            - NotBlank:
+                  message: 'nazwa miasta pls'
+                  groups: [new, edit]
+            - Length:
+                  min: 2
+                  max: 255
+                  minMessage: 'okpa ja mam limity. max {{ limit }} xoxoxo'
+                  groups: [new, edit]
+        country:
+            - NotBlank:
+                  message: 'z jakiego "panstwa" "jestes"?'
+                  groups: [new, edit]
+            - Choice:
+                  choices: [PL, DE, FR, ES, IT, GB, US]
+                  message: 'pa tu masz liste'
+                  groups: [new, edit]
+        latitude:
+            - NotBlank:
+                  message: 'cyferki w szerokosc'
+                  groups: [new, edit]
+            - Range:
+                  min: -90
+                  max: 90
+                  notInRangeMessage: 'no ale halo, panie, tu mam limit -90 do 90 elo'
+                  groups: [new, edit]
+        longitude:
+            - NotBlank:
+                  message: 'a tera cyferki w dlugosc'
+                  groups: [new, edit]
+            - Range:
+                  min: -180
+                  max: 180
+                  notInRangeMessage: 'ło panie, -180 do 180 puk puk'
+                  groups: [new, edit]
+
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotBlank:
+                  message: 'gdzie jestesmy?'
+                  groups: [new, edit]
+        date:
+            - NotBlank:
+                  message: 'a kiedy jestesmy?'
+                  groups: [new, edit]
+        celsius:
+            - NotBlank:
+                  message: 'jak goraco bylo?'
+                  groups: [new, edit]
+            - Range:
+                  min: -80
+                  max: 60
+                  notInRangeMessage: 'fejkujesz. ludzie chca -80 do 60 stopni'
+                  groups: [new, edit]

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blokalizacje{% endblock %}
+
+{% block body %}
+    <div class="card hero-card shadow-sm mb-4">
+        <div class="card-body p-4 p-md-5 position-relative">
+            <div class="position-relative" style="z-index: 1; max-width: 38rem;">
+                <div class="text-uppercase small fw-semibold opacity-75 mb-2">wyciag z maszyny od pogody</div>
+                <h1 class="display-6 fw-bold">miejsca ktorych jeszcze nie znamy</h1>
+                <p class="lead mb-0">badz kim chcesz. zmieniaj swiat. poszerzaj horyzaty. kocham cie.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+        <div>
+            <h2 class="h4 mb-1">co my tu mamy....</h2>
+            <p class="text-secondary mb-0">
+                Dobra, ja mam {{ locations|length }} {{ locations|length == 1 ? 'miejsce' :(locations|length % 10 in [2, 3, 4] and locations|length % 100 not in [12, 13, 14] ? 'miejsca' : 'miejsc') }} tu
+            </p>
+           </div>
+        <a href="{{ path('app_location_new') }}" class="btn btn-primary">chcesz wiecej?</a>
+    </div>
+
+    <div class="card table-card overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>siti</th>
+                        <th>kantri</th>
+                        <th>cyferki</th>
+                        <th class="text-end">more?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for location in locations %}
+                    <tr>
+                        <td class="fw-semibold">{{ location.city }}</td>
+                        <td><span class="badge rounded-pill text-bg-light border">{{ location.country }}</span></td>
+                        <td class="text-secondary">{{ location.latitude }}, {{ location.longitude }}</td>
+                        <td>
+                            <div class="action-stack justify-content-end">
+                                <a href="{{ path('app_measurement_index', {location: location.id}) }}" class="btn btn-sm btn-outline-primary">Wymiary</a>
+                                <a href="{{ path('app_location_show', {id: location.id}) }}" class="btn btn-sm btn-outline-secondary">👀</a>
+                                <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn btn-sm btn-outline-secondary">zmiany</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4" class="empty-state">Booo pusto tu, ja chce wiecej!</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

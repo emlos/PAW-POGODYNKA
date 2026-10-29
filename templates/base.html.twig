@@ -2,28 +2,156 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Pogodynka{% endblock %} | Pogodynka</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
         {% endblock %}
 
-        {% set frankenphp_hot_reload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
-        {% if frankenphp_hot_reload %}
-            <meta name="frankenphp-hot-reload:url" content="{{ frankenphp_hot_reload }}">
-            <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
-            <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
-        {% endif %}
-
         <style>
+            :root {
+                --weather-blue: #0d6efd;
+                --weather-dark: #102a43;
+                --weather-surface: #f4f8fc;
+            }
+
             body {
-                background: url("https://placehold.co/100x100/FFFFFF/EFEFEF/png?text=57929");
+                min-height: 100vh;
+                background: linear-gradient(180deg, #eaf4ff 0%, var(--weather-surface) 42%, #ffffff 100%);
+                color: var(--weather-dark);
+            }
+
+            .navbar-brand {
+                letter-spacing: .02em;
+            }
+
+            .page-shell {
+                min-height: calc(100vh - 72px);
+            }
+
+            .hero-card {
+                background: linear-gradient(135deg, #0d6efd 0%, #39a8ff 100%);
+                border: 0;
+                color: white;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .table-card, .form-card, .detail-card {
+                border: 0;
+            }
+
+            .table-card .table {
+                margin-bottom: 0;
+            }
+
+            .table-card th {
+                color: #52606d;
+                font-size: .78rem;
+                letter-spacing: .06em;
+                text-transform: uppercase;
+            }
+
+            .table-card td, .table-card th {
+                vertical-align: middle;
+            }
+
+            .form-label {
+                font-weight: 600;
+            }
+
+            .form-control, .form-select {
+                border-color: #d9e2ec;
+                padding: .7rem .85rem;
+            }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #74b9ff;
+                box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .12);
+            }
+
+            .breadcrumb a {
+                text-decoration: none;
+            }
+
+            .empty-state {
+                color: #829ab1;
+                padding: 3rem 1rem;
+                text-align: center;
+            }
+
+            .action-stack {
+                display: flex;
+                flex-wrap: wrap;
+                gap: .5rem;
+            }
+
+            .sf-toolbar {
+                display: none !important;
+            }
+
+            @media (max-width: 575.98px) {
+                .page-shell {
+                    min-height: calc(100vh - 64px);
+                }
+
+                .hero-card::after {
+                    font-size: 8rem;
+                    right: -.5rem;
+                    top: 0;
+                }
+
+                .action-stack .btn {
+                    flex: 1 1 auto;
+                }
+
+                .measurement-table th:last-child,
+                .measurement-table td:last-child {
+                    display: none;
+                }
             }
         </style>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-semibold" href="{{ path('app_location_index') }}">p-p-p-pogodynka</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavigation">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_location_index') }}">Loklokacja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_measurement_index') }}">Meżurementy</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-light btn-sm" href="{{ path('app_location_new') }}">nowa lokacja</a>
+                        <a class="btn btn-primary btn-sm" href="{{ path('app_measurement_new') }}">+nowy pomiarr</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="page-shell py-4 py-md-5">
+            <div class="container">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zamknij"></button>
+                    </div>
+                {% endfor %}
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>

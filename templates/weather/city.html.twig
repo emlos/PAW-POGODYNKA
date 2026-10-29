@@ -3,16 +3,40 @@
 {# @var location \App\Entity\Location #}
 {# @var measurements \App\Entity\Measurement[] #}
 
-{% block title %}Weather in {{ location.city }}, {{ location.country }}{% endblock %}
+{% block title %}Pogodka! {{ location.city }}, {{ location.country }}{% endblock %}
 
 {% block body %}
-<main>
-    <h1>Weather in {{ location.city }}, {{ location.country }}</h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="text-uppercase small text-primary fw-semibold mb-2">niedziela wieczor.... moze nie neidziela ale prognoza</div>
+            <h1 class="display-6 fw-bold mb-1">{{ location.city }}, {{ location.country }}</h1>
+            <p class="text-secondary mb-0">wglad w przyszlosc dla tego nieszczesnego miejsca</p>
+        </div>
+        <a class="btn btn-outline-primary" href="{{ path('app_location_index') }}">wroc do lokacji lepszych</a>
+    </div>
 
-    <ul>
-        {% for measurement in measurements %}
-            <li>{{ measurement.date|date('d.m.Y') }}: {{ measurement.celsius }}&deg;C</li>
-        {% endfor %}
-    </ul>
-</main>
+    <div class="card table-card overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>czas</th>
+                        <th>goraco</th>
+                        <th class="text-end">zmiany</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for measurement in measurements %}
+                        <tr>
+                            <td>{{ measurement.date|date('d.m.Y') }}</td>
+                            <td><span class="badge text-bg-primary">{{ measurement.celsius }} temp ludzkiej</span></td>
+                            <td class="text-end"><a href="{{ path('app_measurement_show', {id: measurement.id}) }}" class="btn btn-sm btn-outline-secondary">szczegolnosci</a></td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="3" class="empty-state">nic nie wiemy. cicho glucho tajemniczo jakos. strasznie. brr</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

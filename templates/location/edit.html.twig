@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Edycja Spedycja Lokalicyja{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_location_index') }}">Lokalizacje rawr</a></li>
+            <li class="breadcrumb-item active" aria-current="page">zabawa z {{ location.city }}</li>
+        </ol>
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card form-card">
+                <div class="card-body p-4 p-md-5">
+                    <div class="mb-4">
+                        <div class="text-uppercase small text-primary fw-semibold mb-2">~~~~~~~~~~~~~~~xo</div>
+                        <h1 class="h2 mb-2">zmieniaj</h1>
+                        <p class="text-secondary mb-0">czy na pewno mamy to? mamy panie mamy....</p>
+                    </div>
+                    {{ include('location/_form.html.twig', {button_label: 'dajesz'}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Powy Nomiar{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_measurement_index') }}">Powmiary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">a dodaj?</li>
+        </ol>
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card form-card">
+                <div class="card-body p-4 p-md-5">
+                    <div class="mb-4">
+                        <div class="text-uppercase small text-primary fw-semibold mb-2">no dobra, tera czas na twoja kreatywnosc</div>
+                        <h1 class="h2 mb-2">tu masz sobie cos wymislic</h1>
+                        <p class="text-secondary mb-0">a jak zapiszesz to mamy to. zbieramy donejty na tokeny btw :3</p>
+                    </div>
+                    {{ include('measurement/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

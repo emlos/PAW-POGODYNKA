@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}romiar no. #{{ measurement.id }}{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_measurement_index') }}">yraimoP</a></li>
+            <li class="breadcrumb-item active" aria-current="page">NR. #{{ measurement.id }}</li>
+        </ol>
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card detail-card">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+                        <div>
+                            <div class="text-uppercase small text-primary fw-semibold mb-2">tu no masz. cyferki</div>
+                            <h1 class="h2 mb-1">{{ measurement.location.city }}</h1>
+                            <p class="text-secondary mb-0">to jest na 'kiedy': {{ measurement.date|date('d.m.Y') }}</p>
+                        </div>
+                        <span class="badge text-bg-primary fs-6 px-3 py-2">{{ measurement.celsius }} celcius of hot latinas</span>
+                    </div>
+                    <dl class="row mb-4">
+                        <dt class="col-sm-5 text-secondary">Lokalizacja4U</dt>
+                        <dd class="col-sm-7"><a href="{{ path('app_location_show', {id: measurement.location.id}) }}">{{ measurement.location.city }}, {{ measurement.location.country }}</a></dd>
+                        <dt class="col-sm-5 text-secondary">dejta</dt>
+                        <dd class="col-sm-7">{{ measurement.date|date('d.m.Y') }}</dd>
+                        <dt class="col-sm-5 text-secondary">brr! czy uff?</dt>
+                        <dd class="col-sm-7">{{ measurement.celsius }} selsijus</dd>
+                    </dl>
+                    <div class="action-stack">
+                        <a href="{{ path('app_measurement_edit', {id: measurement.id}) }}" class="btn btn-outline-secondary">zmieniaj</a>
+                        {{ include('measurement/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

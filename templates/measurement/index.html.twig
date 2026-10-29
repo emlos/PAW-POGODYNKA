@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zamiary{% endblock %}
+
+{% block body %}
+    <div class="card hero-card shadow-sm mb-4">
+        <div class="card-body p-4 p-md-5 position-relative">
+            <div class="position-relative" style="z-index: 1; max-width: 38rem;">
+                <div class="text-uppercase small fw-semibold opacity-75 mb-2">Dane od pogodynki</div>
+                <h1 class="display-6 fw-bold">bedzie padac?</h1>
+                <p class="lead mb-0">kochaj mnie jak irlandie (jak ja dodasz) patrz i zmieniaj na to co masz w miedzyczasie</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+        <div>
+            <h2 class="h4 mb-1">xDDDD to claude te prognozy generowal to sie TVP zdziwi xDDD</h2>
+            <p class="text-secondary mb-0">
+                {{ measurements|length }} (+/-67) pomyslow tu
+                {% if location %}, np ten dla {{ location.city }}{% endif %}
+            </p>
+        </div>
+        <div class="action-stack">
+            <a href="{{ path('app_location_index') }}" class="btn btn-outline-secondary">Lokacje</a>
+            <a href="{{ path('app_measurement_new') }}" class="btn btn-primary"></a>
+        </div>
+    </div>
+
+    <div class="card table-card overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover measurement-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Loczki</th>
+                        <th>Dateczki</th>
+                        <th>Termperaturki</th>
+                        <th class="text-end">Akcjetki</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for measurement in measurements %}
+                    <tr>
+                        <td>
+                            <a class="fw-semibold text-decoration-none" href="{{ path('app_location_show', {id: measurement.location.id}) }}">{{ measurement.location.city }}</a>
+                            <div class="small text-secondary">{{ measurement.location.country }}</div>
+                        </td>
+                        <td>{{ measurement.date|date('d.m.Y') }}</td>
+                        <td><span class="badge text-bg-primary">{{ measurement.celsius }}°C</span></td>
+                        <td>
+                            <div class="action-stack justify-content-end">
+                                <a href="{{ path('app_measurement_show', {id: measurement.id}) }}" class="btn btn-sm btn-outline-secondary">podgladaj</a>
+                                <a href="{{ path('app_measurement_edit', {id: measurement.id}) }}" class="btn btn-sm btn-outline-secondary">dotykaj</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4" class="empty-state">no i co. claude tokenow nie mial. pogoda odwolana</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

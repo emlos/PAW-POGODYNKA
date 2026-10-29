@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}moar xD{% endblock %}
+
+{% block body %}
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_location_index') }}">Lokówki</a></li>
+            <li class="breadcrumb-item active" aria-current="page">nowa lizacja</li>
+        </ol>
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card form-card">
+                <div class="card-body p-4 p-md-5">
+                    <div class="mb-4">
+                        <div class="text-uppercase small text-primary fw-semibold mb-2">dla kumatych pozdro</div>
+                        <h1 class="h2 mb-2">++++click++++</h1>
+                        <p class="text-secondary mb-0">dobra no do dajesz piszesz produkujesz sie</p>
+                    </div>
+                    {{ include('location/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
