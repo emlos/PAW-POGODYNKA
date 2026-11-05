@@ -19,8 +19,10 @@
             <p class="text-secondary mb-0">
                 Dobra, ja mam {{ locations|length }} {{ locations|length == 1 ? 'miejsce' :(locations|length % 10 in [2, 3, 4] and locations|length % 100 not in [12, 13, 14] ? 'miejsca' : 'miejsc') }} tu
             </p>
-           </div>
-        <a href="{{ path('app_location_new') }}" class="btn btn-primary">chcesz wiecej?</a>
+        </div>
+        {% if is_granted('ROLE_LOCATION_NEW') %}
+            <a href="{{ path('app_location_new') }}" class="btn btn-primary">chcesz wiecej?</a>
+        {% endif %}
     </div>
 
     <div class="card table-card overflow-hidden">
@@ -42,9 +44,15 @@
                         <td class="text-secondary">{{ location.latitude }}, {{ location.longitude }}</td>
                         <td>
                             <div class="action-stack justify-content-end">
-                                <a href="{{ path('app_measurement_index', {location: location.id}) }}" class="btn btn-sm btn-outline-primary">Wymiary</a>
-                                <a href="{{ path('app_location_show', {id: location.id}) }}" class="btn btn-sm btn-outline-secondary">👀</a>
-                                <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn btn-sm btn-outline-secondary">zmiany</a>
+                                {% if is_granted('ROLE_MEASUREMENT_INDEX') %}
+                                    <a href="{{ path('app_measurement_index', {location: location.id}) }}" class="btn btn-sm btn-outline-primary">Wymiary</a>
+                                {% endif %}
+                                {% if is_granted('ROLE_LOCATION_SHOW') %}
+                                    <a href="{{ path('app_location_show', {id: location.id}) }}" class="btn btn-sm btn-outline-secondary">👀</a>
+                                {% endif %}
+                                {% if is_granted('ROLE_LOCATION_EDIT') %}
+                                    <a href="{{ path('app_location_edit', {id: location.id}) }}" class="btn btn-sm btn-outline-secondary">zmiany</a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

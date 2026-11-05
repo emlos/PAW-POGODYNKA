@@ -91,7 +91,7 @@
             }
 
             .sf-toolbar {
-                display: none !important;
+                
             }
 
             @media (max-width: 575.98px) {
@@ -120,6 +120,11 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand fw-semibold" href="{{ path('app_location_index') }}">p-p-p-pogodynka</a>
+                   {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
+                <a href="{{ path('app_logout') }}">Logout</a> 
+            {% else %} 
+                <a href="{{ path('app_login') }}">Login</a> 
+            {% endif %} 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -136,6 +141,7 @@
                         <a class="btn btn-outline-light btn-sm" href="{{ path('app_location_new') }}">nowa lokacja</a>
                         <a class="btn btn-primary btn-sm" href="{{ path('app_measurement_new') }}">+nowy pomiarr</a>
                     </div>
+                   
                 </div>
             </div>
         </nav>
@@ -149,7 +155,10 @@
                     </div>
                 {% endfor %}
                 {% block body %}{% endblock %}
+                
             </div>
+
+          
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
